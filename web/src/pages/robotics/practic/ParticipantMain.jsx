@@ -1,0 +1,46 @@
+import Header from "../../../components/base/header";
+import BackgroundImages from "../../../components/base/backgroundImages";
+import MiniFooter from "../../../components/base/MiniFooter";
+import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import ParticipantPanel from "../../../components/categories/robotics/practic/ParticipantPanel";
+import MissionButtonsList from "../../../components/categories/robotics/practic/MissionButtonsList";
+
+export default function ParticipantMain() { 
+  const { user, particapent, logoutParticapent } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutParticapent();
+    navigate("/robotics/practic/loginPaticapent");
+  };
+
+  return (
+    <>  
+      <BackgroundImages/>
+      <Header 
+        olympiadText="ОЛИМПИАДА ПО РОБОТОТЕХНИКЕ" 
+      />
+      
+      {/* Основной контент с отступом сверху */}
+      <div className="mt-32 flex flex-col items-center"> {/* mt-32 чтобы под Header */}
+        <ParticipantPanel participant={particapent}/>
+        <MissionButtonsList navigate={navigate}/>
+      </div>
+      
+      <button
+        onClick={handleLogout}
+        className="fixed bottom-[10%] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 px-10 py-3 bg-[#cef1f8] text-[#00B7CF] futura-heavy text-xl rounded-4xl hover:bg-[#a6e9f7] transition-colors duration-200 shadow-md z-50"
+      >
+        <img 
+          src="/icons/back.svg" 
+          alt="Назад" 
+          className="w-6 h-6"
+        />
+        НАЗАД
+      </button>
+      
+      <MiniFooter/>
+    </>
+  );
+}

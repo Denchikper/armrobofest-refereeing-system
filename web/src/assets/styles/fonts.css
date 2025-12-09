@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'FuturaPT_Bold';
+  src: url('../fonts/FuturaPTBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FuturaPT_Book';
+  src: url('../fonts/FuturaPTBook.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FuturaPT_Medium';
+  src: url('../fonts/FuturaPTMedium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FuturaPT_Light';
+  src: url('../fonts/FuturaPTLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FuturaPT_Heavy';
+  src: url('../fonts/FuturaPTHeavy.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FuturaPT_ExtraBold';
+  src: url('../fonts/FuturaPTExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FuturaPT_Demi';
+  src: url('../fonts/FuturaPTDemi.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+.futura-bold {
+  font-family: 'FuturaPT_Bold', sans-serif !important;
+}
+.futura-book {
+  font-family: 'FuturaPT_Book', sans-serif !important;
+}
+.futura-medium {
+  font-family: 'FuturaPT_Medium', sans-serif !important;
+}
+.futura-light {
+  font-family: 'FuturaPT_Light', sans-serif !important;
+}
+.futura-heavy {
+  font-family: 'FuturaPT_Heavy', sans-serif !important;
+}
+.futura-extrabold {
+  font-family: 'FuturaPT_ExtraBold', sans-serif !important;
+}
+.futura-demi {
+  font-family: 'FuturaPT_Demi', sans-serif !important;
+}
