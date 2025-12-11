@@ -11,10 +11,6 @@ const Organization = sequelize.define('Organization', {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false
-  },
-  short_name: {
-    type: DataTypes.STRING,
-    allowNull: true
   }
 }, {
   tableName: 'organizations',

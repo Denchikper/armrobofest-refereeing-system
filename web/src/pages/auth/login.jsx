@@ -1,20 +1,27 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom"; // ✅ добавляем навигацию
-// import { loginUser } from "../api/auth"; // ✅ импорт API
-// import { useAuth } from "../context/AuthContext.jsx";
-// import { useEffect } from "react";
-
 import Header from "../../components/base/header";
 import BackgroundImages from "../../components/base/backgroundImages";
 import LoginModal from "../../components/auth/loginModal";
 import MiniFooter from "../../components/base/MiniFooter";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const { token, login, logout, loginParticapent } = useAuth();
+  const navigate = useNavigate();
   return (
     <>
         <BackgroundImages/>
         <Header />
-        <LoginModal upText="ВВЕДИТЕ ПРИСВОЕННЫЙ ВАМ КОД" loginType="user"/>
+        <LoginModal 
+          upText="ВВЕДИТЕ ПРИСВОЕННЫЙ ВАМ КОД" 
+          loginType="user" 
+          isUser={true} 
+          userToken={token} 
+          login={login}
+          logout={logout}
+          loginParticapent={loginParticapent}
+          navigate={navigate}
+          />
         <MiniFooter/>
     </>
   );

@@ -10,9 +10,11 @@ try {
 
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error("Неверный код");
+        data = response;
+      } else if (response.status === 402) {
+        data = response;
       } else if (response.status >= 500) {
-        throw new Error("Ошибка сервера. Попробуйте позже");
+        data = response;
       } else {
         throw new Error(data.message || "Ошибка при авторизации");
       }

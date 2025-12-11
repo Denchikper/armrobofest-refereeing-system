@@ -3,10 +3,10 @@ export default function MissionButton({ disabled = false, numMission, onClick}) 
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`flex items-center justify-center gap-3 px-8 py-4 futura-heavy text-xl rounded-4xl z-50 
+      className={`flex items-center justify-center gap-3 px-8 py-4 shadow-md futura-heavy text-xl rounded-4xl z-50 
         ${disabled 
           ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-          : 'bg-[#00B7CF] text-white hover:bg-[#00B7CF]/80'
+          : 'bg-[#3AC318] text-white hover:bg-[#3AC318]/80'
         }`}
     >
       <span className="text-2xl font-bold">{numMission}</span>

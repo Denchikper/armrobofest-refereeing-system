@@ -21,7 +21,6 @@
 body, html {
   overscroll-behavior-y: none;
   touch-action: none;
-  overflow: hidden;
 }
 
 img {

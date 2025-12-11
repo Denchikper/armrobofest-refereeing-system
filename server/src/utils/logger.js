@@ -34,7 +34,7 @@ const logger = createLogger({
   ],
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'p') {
   logger.add(
     new transports.Console({
       format: format.printf(({ level, message }) => {

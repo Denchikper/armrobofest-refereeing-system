@@ -7,7 +7,7 @@ import ParticipantPanel from "../../../components/categories/robotics/practic/Pa
 import MissionButtonsList from "../../../components/categories/robotics/practic/MissionButtonsList";
 
 export default function ParticipantMain() { 
-  const { user, particapent, logoutParticapent } = useAuth();
+  const { particapent, logoutParticapent } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -22,18 +22,17 @@ export default function ParticipantMain() {
         olympiadText="ОЛИМПИАДА ПО РОБОТОТЕХНИКЕ" 
       />
       
-      {/* Основной контент с отступом сверху */}
-      <div className="mt-32 flex flex-col items-center"> {/* mt-32 чтобы под Header */}
+      <div className="mt-32 flex flex-col items-center">
         <ParticipantPanel participant={particapent}/>
         <MissionButtonsList navigate={navigate}/>
       </div>
       
       <button
         onClick={handleLogout}
-        className="fixed bottom-[10%] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 px-10 py-3 bg-[#cef1f8] text-[#00B7CF] futura-heavy text-xl rounded-4xl hover:bg-[#a6e9f7] transition-colors duration-200 shadow-md z-50"
+        className="fixed bottom-[10%] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 px-10 py-3 bg-[#CFFFC3] text-[#3AC318] futura-heavy text-xl rounded-4xl hover:bg-[#a6e9f7] transition-colors duration-200 shadow-md z-50"
       >
         <img 
-          src="/icons/back.svg" 
+          src="/icons/back_green.svg" 
           alt="Назад" 
           className="w-6 h-6"
         />

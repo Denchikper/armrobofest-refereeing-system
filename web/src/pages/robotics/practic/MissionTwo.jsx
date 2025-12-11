@@ -9,14 +9,15 @@ import ParticipantMissionPanel from "../../../components/categories/robotics/pra
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-export default function MissionOne() { 
+export default function MissionTwo() { 
   const { user, particapent, logoutParticapent } = useAuth();
   const navigate = useNavigate();
 
   const missionOneItems = [
-    { id: 1, text: "Дорога эвакуации", points: 85, checked: false },
-    { id: 2, text: "Возвращение бегемота Ганса", points: 85, checked: false },
-    { id: 3, text: "Развалины", points: 85, checked: false },
+    { id: 1, text: "ЧИСТКА ЗОНЫ", points: 50, checked: false },
+    { id: 2, text: "ОБНАРУЖЕНИЕ ДЕЙСТВУЮЩИХ МОСТОВ", points: 70, checked: false },
+    { id: 3, text: "ПЕРЕПРАВА ЧЕРЕЗ ПРЕГРАДЫ, ОБНАРУЖЕНИЕ КЛАДА", points: 80, checked: false },
+    { id: 4, text: "БОНУСНЫЕ БАЛЛЫ", points: 50, checked: false }
   ];
 
   const handleLogout = () => {
@@ -31,7 +32,7 @@ export default function MissionOne() {
         upJudge={user}
       />
       <BackgroundImagesGray/>
-      <NameMission number={1}/>
+      <NameMission number={2}/>
       <ParticipantMissionPanel participant={particapent}/>
       <MissionResultBlock items={missionOneItems}/>
       <MissionFooterMenu navigate={navigate} logoutParticapent={logoutParticapent}/>

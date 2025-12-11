@@ -10,6 +10,8 @@ export const getCategoryPath = (token) => {
         return "/robotics/practic/loginPaticapent";
       case 2:
         return "/robotics/teoria/loginPaticapent";
+      case 999:
+        return "/organizator";
       default:
         return "/";
     }

@@ -28,10 +28,10 @@ const Organizer = sequelize.define('Organizer', {
     unique: true,
     allowNull: true
   },
-  access_level_id: {
+  category_id: {              // ✅ ГЛАВНОЕ ПОЛЕ
     type: DataTypes.INTEGER,
-    allowNull: true
-  }
+    allowNull: false
+  },
 }, {
   tableName: 'organizers',
   timestamps: false,

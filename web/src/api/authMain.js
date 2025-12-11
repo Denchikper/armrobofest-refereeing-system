@@ -17,12 +17,11 @@ try {
     } catch {
       data = {};
     }
-
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error("Неверный код для входа");
+        return { ok: false, status: response.status, data };
       } else if (response.status >= 500) {
-        throw new Error("Ошибка сервера. Попробуйте позже");
+        return { ok: false, status: response.status, data };
       } else {
         throw new Error(data.message || "Ошибка при авторизации");
       }

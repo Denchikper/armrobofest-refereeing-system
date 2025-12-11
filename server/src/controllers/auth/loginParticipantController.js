@@ -9,9 +9,14 @@ exports.loginParticipant = async (req, res) => {
   const { login_code } = req.body;
 
   try {
+    var participant_without_cat = await Participant.findOne({ where: { login_code } });
+    if (!participant_without_cat) {
+        return res.status(401).json({ message: 'Неверный код для входа.' });
+    }
     var participant = await Participant.findOne({ where: { login_code, category_id: req.user.categoryId } });
+
     if (!participant) {
-        return res.status(401).json({ message: 'Неверный код для входа' });
+        return res.status(402).json({ message: 'Этот участник не из вашей категории.' });
     }
 
     let team = await Team.findOne({ where: { id: participant.team_id } });
@@ -35,11 +40,11 @@ exports.loginParticipant = async (req, res) => {
 
     // Если не нашли нигде
     return res.status(401).json({ 
-      message: 'Неверный код для входа' 
+      message: 'Неверный код для входа.' 
     });
 
   } catch (err) {
     logger.error('Ошибка авторизации:', err);
-    res.status(500).json({ message: 'Ошибка сервера' });
+    res.status(500).json({ message: 'Ошибка сервера.' });
   }
 };

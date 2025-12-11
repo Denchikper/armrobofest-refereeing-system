@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
+
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
   const [particapent, setParticipant] = useState(null); // ← ОПЕЧАТКА ОСТАВЛЯЕМ
@@ -35,7 +36,7 @@ export function AuthProvider({ children }) {
         localStorage.removeItem("particapent");
       }
     }
-    
+
     setLoading(false);
   }, []);
 
@@ -52,15 +53,13 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
   };
 
-  const loginParticapent = (participantToken) => { // ← ТАКАЯ ЖЕ ОПЕЧАТКА
-    // Декодируем токен участника
+  const loginParticapent = (participantToken) => {
     const decodedParticipant = jwtDecode(participantToken);
     setParticipant(decodedParticipant);
-    // Сохраняем как JSON строку с ОПЕЧАТКОЙ
     localStorage.setItem("particapent", JSON.stringify(decodedParticipant));
   };
 
-  const logoutParticapent = () => { // ← ТАКАЯ ЖЕ ОПЕЧАТКА
+  const logoutParticapent = () => {
     setParticipant(null);
     localStorage.removeItem("particapent");
   };
@@ -71,10 +70,10 @@ export function AuthProvider({ children }) {
       user, 
       login, 
       logout, 
-      loading, 
+      loading,
       particapent, // ← ОПЕЧАТКА
       loginParticapent, // ← ОПЕЧАТКА
-      logoutParticapent // ← ОПЕЧАТКА
+      logoutParticapent, // ← ОПЕЧАТКА
     }}>
       {children}
     </AuthContext.Provider>
