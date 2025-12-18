@@ -1,5 +1,5 @@
-import Header from "../../../components/base/header";
-import BackgroundImages from "../../../components/base/backgroundImages";
+import Header from "../../../components/base/Header";
+import BackgroundImages from "../../../components/base/BackgroundImages";
 import MiniFooter from "../../../components/base/MiniFooter";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";

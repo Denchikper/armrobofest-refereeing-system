@@ -1,10 +1,10 @@
 import BackgroundImagesGray from "../../../components/base/backgroundImagesGray";
-import Header from "../../../components/base/header";
+import Header from "../../../components/base/Header";
 import MiniFooter from "../../../components/base/MiniFooter";
 import BackButton from "../../../components/categories/robotics/practic/BackButton";
 import MissionFooterMenu from "../../../components/categories/robotics/practic/MissionFooterMenu";
 import MissionResultBlock from "../../../components/categories/robotics/practic/MissionResultBlock";
-import NameMission from "../../../components/categories/robotics/practic/nameMission";
+import NameMission from "../../../components/categories/robotics/practic/NameMission";
 import ParticipantMissionPanel from "../../../components/categories/robotics/practic/ParticipantMissionPanel";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";

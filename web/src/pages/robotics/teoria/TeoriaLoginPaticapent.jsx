@@ -1,11 +1,11 @@
-import Header from "../../../components/base/header";
-import BackgroundImages from "../../../components/base/backgroundImages";
-import LoginModal from "../../../components/auth/loginModal";
+import Header from "../../../components/base/Header";
+import BackgroundImages from "../../../components/base/BackgroundImages";
+import LoginModal from "../../../components/auth/LoginModal";
 import MiniFooter from "../../../components/base/MiniFooter";
 import JudgePanel from "../../../components/categories/JudgePanel";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import LogoutButton from "../../../components/auth/logoutButton";
+import LogoutButton from "../../../components/auth/LogoutButton";
 
 export default function PracticLoginPaticapent() {
   const { token, user, login, logout, loginParticapent } = useAuth();

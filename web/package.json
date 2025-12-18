@@ -9,7 +9,7 @@
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "preview": "vite preview",
-    "preview:prod": "vite preview --mode production"
+    "preview:prod": "vite preview --mode production --host"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.17",
