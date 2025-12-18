@@ -18,8 +18,7 @@ const startServer = async () => {
   try {
     await testConnectionDB();
     await syncDatabase();
-    
-    
+
     app.listen(SERVER_PORT, SERVER_IP, () => {
       logger.server_success(`Сервер запущен на http://${SERVER_IP}:${SERVER_PORT}`);
     });
