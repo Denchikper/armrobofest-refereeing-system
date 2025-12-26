@@ -1,4 +1,4 @@
-import BackgroundImagesGray from "../../../components/base/backgroundImagesGray";
+import BackgroundImagesGray from "../../../components/base/BackgroundImagesGray";
 import Header from "../../../components/base/Header";
 import MiniFooter from "../../../components/base/MiniFooter";
 import BackButton from "../../../components/categories/robotics/practic/BackButton";
