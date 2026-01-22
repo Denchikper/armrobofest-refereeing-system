@@ -1,5 +1,4 @@
 module.exports = function onlyMyCategory(req, res, next) {
-  // ✅ Организатору можно всё
   if (req.user.role === 'organizer') {
     return next();
   }
@@ -13,5 +12,5 @@ module.exports = function onlyMyCategory(req, res, next) {
     });
   }
 
-  next(); // ✅ доступ разрешён
+  next();
 };

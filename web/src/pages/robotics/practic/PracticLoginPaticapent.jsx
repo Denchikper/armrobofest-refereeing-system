@@ -12,12 +12,7 @@ export default function PracticLoginPaticapent() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/");
-
-    setTimeout(() => {
       logout();
-    }, 100);
-    navigate("/");
   };
 
   return (

@@ -5,9 +5,9 @@ const env = process.env.NODE_ENV || 'development';
 dotenv.config({ path: path.resolve(__dirname, `.env.${env}`) });
 
 const app = require('./src/app');
-const logger = require('./src/utils/logger');
 const { testConnectionDB } = require('./src/test/testConnectionDB');
 const { syncDatabase } = require('./src/utils/databaseSync');
+const logger = require('./src/services/loggerNew/logger');
 
 const SERVER_PORT = process.env.SERVER_PORT;
 const SERVER_IP = process.env.SERVER_IP;
@@ -20,12 +20,11 @@ const startServer = async () => {
     await syncDatabase();
 
     app.listen(SERVER_PORT, SERVER_IP, () => {
-      logger.server_success(`Сервер запущен на http://${SERVER_IP}:${SERVER_PORT}`);
+      logger.server.start_success(`http://${SERVER_IP}:${SERVER_PORT}`)
     });
 
   } catch (error) {
-    logger.server_error('Ошибка запуска сервера:');
-    console.error(error);
+    logger.error('Ошибка запуска сервера:', error);
   }
 };
 

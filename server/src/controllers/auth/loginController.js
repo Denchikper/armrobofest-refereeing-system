@@ -1,50 +1,60 @@
 const Organizer = require('../../models/organizers');
 const Judge = require('../../models/judges');
-const generateToken = require('../../services/generators/generateToken');
-const logger = require('../../utils/logger');
-const Organization = require('../../models/organizations');
+const { Organization } = require('../../models');
+
+const logger = require('../../services/loggerNew/logger');
+const { generateToken } = require('../../services/jwtUtils');
 
 exports.login = async (req, res) => {
   const { login_code } = req.body;
 
   try {
-    const judge = await Judge.findOne({ where: { login_code } });
+    const judge = await Judge.findOne({ 
+      where: { login_code },
+      include: [Organization]
+    });
 
     if (judge) {
-      let organization = await Organization.findOne({ where: { id: judge.organization_id } });
-      const token = generateToken({ 
-        userId: judge.id,
-        role: 'Судья', // ✅ лучше латиницей
-        firstName: judge.first_name,
-        lastName: judge.last_name,
-        secondName: judge.second_name,
-        organizationName: organization.name,
-        categoryId: judge.category_id // ✅ ВАЖНЕЙШЕЕ ПОЛЕ
-      }, '2h');
-
-      return res.json({ token });
+      const token = generateToken(judge.id, 'Судья');
+      logger.auth.login(login_code, judge.id, false);
+      const response = {
+        accessToken: token,
+        user: {
+          userId: judge.id,
+          role: 'Судья',
+          firstName: judge.first_name,
+          lastName: judge.last_name,
+          secondName: judge.second_name,
+          organizationName: judge.Organization.name,
+          categoryId: judge.category_id
+        }
+      }
+      return res.status(200).json(response);
     }
 
     const organizer = await Organizer.findOne({ where: { login_code } });
 
-    if (organizer) {
-      const token = generateToken({ 
+    if (!organizer) {
+      return res.status(401).json({ 
+        message: 'Неверный код для входа' 
+      });
+    }
+    const token = generateToken(organizer.id, 'Организатор');
+
+    const response = {
+      accessToken: token,
+      user: {
         userId: organizer.id,
         role: 'Организатор',
-        firstName: organizer.first_name,
-        lastName: organizer.last_name,
+        firstName: organizer.first_name,  
+        lastName: organizer.last_name,  
         secondName: organizer.second_name,
-        organizationId: organizer.organization_id,
-        categoryId: organizer.category_id
-      }, '2h');
+        organizationName: organizer.Organization.name,
+      }
+    };
 
-      return res.json({ token });
-    }
-
-    // ❌ Если не найден ни там, ни там
-    return res.status(401).json({ 
-      message: 'Неверный код для входа' 
-    });
+    logger.auth.login(login_code, organizer.id, true);
+    return res.json(response);
 
   } catch (err) {
     logger.error('Ошибка авторизации:', err);

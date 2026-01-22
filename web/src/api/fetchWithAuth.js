@@ -33,12 +33,17 @@ export async function fetchWithAuth(token, url, options = {}, logout, navigate) 
     });
     let data;
     try { data = await res.json(); } catch { data = await res.text(); }
+
     if (!res.ok) {
       return { ok: false, status: res.status, data };
     }
 
     return { ok: true, status: res.status, data };
   } catch (err) {
+    if (err.name === "TypeError") {
+      throw new Error("Сервер недоступен. Проверьте соединение");
+    }
+
     console.error("Ошибка при fetchWithAuth:", err);
     return { ok: false, status: 0, data: err.message };
   }

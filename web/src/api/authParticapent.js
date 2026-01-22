@@ -7,19 +7,6 @@ try {
         body: JSON.stringify(payload)
      }, logout, navigate);
     let data = response.data;
-
-    if (!response.ok) {
-      if (response.status === 401) {
-        data = response;
-      } else if (response.status === 402) {
-        data = response;
-      } else if (response.status >= 500) {
-        data = response;
-      } else {
-        throw new Error(data.message || "Ошибка при авторизации");
-      }
-    }
-
     return data;
   } catch (err) {
     if (err.name === "TypeError") {

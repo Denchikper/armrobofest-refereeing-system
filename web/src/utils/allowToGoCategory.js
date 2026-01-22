@@ -1,17 +1,13 @@
-import { jwtDecode } from "jwt-decode";
-
-export const allowToGoCategory = (token, allowToGo) => {
-  try {
-    // Проверка на null/undefined
-    if (!token) return false;
-    
-    const decoded = jwtDecode(token);
-    const categoryId = decoded.categoryId;
-
-    return categoryId === allowToGo;
-
-  } catch (error) {
-    console.error("Invalid token:", error);
-    return false; // ← Возвращаем false, а не "/"
+export const allowToGoCategory = (user, categoryId) => {
+  if (!user || !user.role) return false;
+  
+  // Организатор может везде
+  if (user.role === "Организатор") return true;
+  
+  // Судья только в свою категорию
+  if (user.role === "Судья") {
+    return user.categoryId === categoryId;
   }
+  
+  return false;
 };

@@ -14,6 +14,7 @@ export default function Login() {
         <Header />
         <LoginModal 
           upText="ВВЕДИТЕ ПРИСВОЕННЫЙ ВАМ КОД" 
+          hasJudgePanel={false}
           loginType="user" 
           isUser={true} 
           userToken={token} 

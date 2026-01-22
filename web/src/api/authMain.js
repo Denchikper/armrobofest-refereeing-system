@@ -1,7 +1,6 @@
 import { API_BASE_URL } from "../config";
 
-
-export async function loginUser(payload) {
+export default async function loginUser (payload) {
 try {
   const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
@@ -12,29 +11,24 @@ try {
   });
 
     let data;
+
     try {
       data = await response.json();
     } catch {
       data = {};
     }
+
     if (!response.ok) {
-      if (response.status === 401) {
-        return { ok: false, status: response.status, data };
-      } else if (response.status >= 500) {
-        return { ok: false, status: response.status, data };
-      } else {
-        throw new Error(data.message || "Ошибка при авторизации");
-      }
+      console.error(data.message || "Ошибка при авторизации");
+      return { ok: false, status: response.status, data };
     }
 
     return data;
   } catch (err) {
     if (err.name === "TypeError") {
-      // Это обычно network error (сервер не отвечает)
       throw new Error("Сервер недоступен. Проверьте соединение");
     }
-
-    console.error("❌ Ошибка при авторизации:", err.message);
-    throw err;
+    
+    console.error("❌ Ошибка при авторизации:", err);
   }
 }

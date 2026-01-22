@@ -1,48 +1,50 @@
-const bcrypt = require('bcryptjs');
 const Participant = require('../../models/participants');
-const generateToken = require('../../services/generators/generateToken');
-const logger = require('../../utils/logger');
+
+const logger = require('../../services/loggerNew/logger');
 const Team = require('../../models/teams');
 const Organization = require('../../models/organizations');
+const { Judge } = require('../../models');
+const { generateTokenPart } = require('../../services/jwtUtils');
 
 exports.loginParticipant = async (req, res) => {
   const { login_code } = req.body;
 
+  const judgeId = req.user.sub;
+  const judge = await Judge.findOne({ where: { id: judgeId } });
+
   try {
-    var participant_without_cat = await Participant.findOne({ where: { login_code } });
-    if (!participant_without_cat) {
-        return res.status(401).json({ message: 'Неверный код для входа.' });
-    }
-    var participant = await Participant.findOne({ where: { login_code, category_id: req.user.categoryId } });
+    const participant = await Participant.findOne({ 
+      where: { login_code },
+      include: [Organization, Team]
+     });
 
     if (!participant) {
+      logger.auth.errorAuth(login_code, null, 'Участник не найден!', judgeId);
+      return res.status(404).json({ message: 'Участник не найден!' });
+    }
+    
+    if (participant.category_id !== judge.category_id) {
+        logger.auth.errorAuth(login_code, participant.id, 'Попытка авторизации участника другой категории', judgeId);
         return res.status(402).json({ message: 'Этот участник не из вашей категории.' });
     }
 
-    let team = await Team.findOne({ where: { id: participant.team_id } });
-    let organization = await Organization.findOne({ where: { id: participant.organization_id } });
+    const token = generateTokenPart(participant.id);
 
-    if (participant) {
-      const token = generateToken({  
-        participantId: participant.id,
+    const response = {
+      accessToken: token,
+      user: {
+        userId: participant.id,
         firstName: participant.first_name,
         lastName: participant.last_name,
         secondName: participant.second_name,
         class: participant.class,
-        teamName: team.team_name,
-        organizationName: organization.name
-      }, '2h');
+        teamName: participant.Team.team_name,
+        organizationName: participant.Organization.name
+      }
+    };
 
-      return res.json({
-        token,
-      });
-    }
-
-    // Если не нашли нигде
-    return res.status(401).json({ 
-      message: 'Неверный код для входа.' 
-    });
-
+    logger.auth.loginPart(login_code, participant.id, judgeId);
+    return res.status(200).json(response);
   } catch (err) {
     logger.error('Ошибка авторизации:', err);
     res.status(500).json({ message: 'Ошибка сервера.' });

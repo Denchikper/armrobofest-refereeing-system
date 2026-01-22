@@ -42,18 +42,6 @@ if (process.env.NODE_ENV !== 'p') {
         let formatted = '';
 
         switch (level) {
-          case 'ws_success':
-            prefix = chalk.bgMagenta.black(' WS ');
-            formatted = `${prefix} - ${chalk.bgGreen.black(' SUCCESS ')} - ${message}`;
-            break;
-          case 'ws_warn':
-            prefix = chalk.bgMagenta.black(' WS ');
-            formatted = `${prefix} - ${chalk.bgYellow.black(' WARN ')} - ${message}`;
-            break;
-          case 'ws_error':
-            prefix = chalk.bgMagenta.black(' WS ');
-            formatted = `${prefix} - ${chalk.bgRed.white(' ERROR ')} - ${message}`;
-            break;
           case 'db_success':
             prefix = chalk.bgHex('#d9ead3').black(' DB ');
             formatted = `${prefix} - ${chalk.bgGreen.black(' SUCCESS ')} - ${message}`;
@@ -89,9 +77,6 @@ if (process.env.NODE_ENV !== 'p') {
   );
 }
 
-logger.ws_success = (msg) => logger.log({ level: 'ws_success', message: msg });
-logger.ws_error = (msg) => logger.log({ level: 'ws_error', message: msg });
-logger.ws_warn = (msg) => logger.log({ level: 'ws_warn', message: msg });
 logger.db_success = (msg) => logger.log({ level: 'db_success', message: msg });
 logger.db_warn = (msg) => logger.log({ level: 'db_warn', message: msg }); 
 logger.db_error = (msg) => logger.log({ level: 'db_error', message: msg });

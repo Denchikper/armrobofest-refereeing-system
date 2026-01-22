@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { loginUser } from "../../api/authMain";
-import { jwtDecode } from "jwt-decode";
 import { loginParticapentRes } from "../../api/authParticapent";
+import loginUser from "../../api/authMain";
+import { motion } from "framer-motion";
+import { getCategoryPath } from "../../utils/getCategoryPath";
 
 export default function LoginModal({ upText, hasJudgePanel = false, loginType, isUser = false, userToken, login, logout, loginParticapent, navigate }) {
   const [code, setCode] = useState("");
@@ -32,8 +33,7 @@ export default function LoginModal({ upText, hasJudgePanel = false, loginType, i
       if (res && res.ok === false) {
         setError(res.data.message);
       } else {
-        loginParticapent(res.token);
-        navigate("/participant");
+        loginParticapent(res.accessToken, res.user, "/participant");
       }
     } else if (loginType === "user") {
       const res = await loginUser({ login_code: code });
@@ -41,34 +41,10 @@ export default function LoginModal({ upText, hasJudgePanel = false, loginType, i
       if (res && res.ok === false) {
         setError(res.data.message);
       } else {
-        const token = res.token;
-        login(token);
-        const decoded = jwtDecode(token);
-        const role = decoded.role;
-        const categoryId = decoded.categoryId;
-        switch (role) {
-          case "Организатор":
-            console.log(decoded)
-            navigate(`/organizator`);
-            break;
-          case "Судья":
-            switch (categoryId) {
-              case 1:
-                navigate(`/robotics/practic/loginPaticapent`);
-                break;
-              case 2:
-                navigate(`/robotics/teoria/loginPaticapent`);
-                break;
-              default:
-                navigate("/");
-                break;
-            }
-            break;
-          default:
-            navigate("/");
-            break;
+        const token = res.accessToken;
+        const user = res.user;
+        login(token, user, getCategoryPath(user));
         }
-      }
     }
   };
 

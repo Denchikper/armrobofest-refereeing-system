@@ -1,12 +1,12 @@
 const sequelize = require('../database');
-const logger = require('../utils/logger');
+const logger = require('../services/loggerNew/logger');
 
 async function testConnectionDB() {
   try {
     await sequelize.authenticate();
-    logger.db_success('Соединение с базой установлено успешно!');
+    logger.db.success('Соединение с базой установлено успешно!');
   } catch (error) {
-    logger.db_error('Не удалось подключиться к базе:', error);
+    logger.db.error('Не удалось подключиться к базе!', error);
   }
 }
 
