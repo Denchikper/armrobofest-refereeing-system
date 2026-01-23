@@ -22,14 +22,14 @@ export default function ParticipantMain() {
         olympiadText="ОЛИМПИАДА ПО РОБОТОТЕХНИКЕ" 
       />
       
-      <div className="mt-32 flex flex-col items-center">
+      <div className="mt-32 flex flex-col items-center ">
         <ParticipantPanel participant={particapent}/>
         <MissionButtonsList navigate={navigate}/>
       </div>
       
       <button
         onClick={handleLogout}
-        className="fixed bottom-[10%] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 px-10 py-3 bg-[#CFFFC3] text-[#3AC318] futura-heavy text-xl rounded-4xl hover:bg-[#a6e9f7] transition-colors duration-200 shadow-md z-50"
+        className="fixed bottom-[10%] left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 px-10 py-3 bg-[#CFFFC3] text-[#3AC318] futura-heavy text-xl rounded-4xl hover:bg-[#b9ffa8] transition-colors duration-200 shadow-md z-50"
       >
         <img 
           src="/icons/back_green.svg" 

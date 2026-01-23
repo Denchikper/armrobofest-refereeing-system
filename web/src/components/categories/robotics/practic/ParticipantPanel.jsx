@@ -3,7 +3,7 @@ export default function ParticipantPanel({participant}) {
     return <div>Ошибка</div>; // или можно показать skeleton / loader
   }
   return (
-    <div className="fixed  top-[11%] left-1/2 -translate-x-1/2 z-50">
+    <div className="fixed top-[11%] left-1/2 -translate-x-1/2 z-50">
       <div className="p-6 text-center">
           <h3 className="text-4xl futura-heavy text-[#2E2E2E]">{participant.firstName}</h3>
           <p className="text-3xl text-[#2E2E2E] futura-heavy">{participant.secondName} {participant.lastName}</p>

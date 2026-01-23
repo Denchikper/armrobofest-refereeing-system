@@ -20,13 +20,3 @@ Organization.hasMany(Judge, { foreignKey: 'organization_id' });
 Organization.hasMany(Organizer, { foreignKey: 'organization_id' });
 
 Team.hasMany(Participant, { foreignKey: 'team_id' });
-
-
-
-module.exports = {
-  Organization,
-  Team,
-  Participant,
-  Judge,
-  Organizer
-};

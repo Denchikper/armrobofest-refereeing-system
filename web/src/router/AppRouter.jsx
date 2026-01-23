@@ -25,7 +25,7 @@ export default function AppRouter() {
       <Route
         path="/"
         element={
-          particapent ? (
+          token && particapent && user ? (
             <Navigate to="/participant" replace />
           ) : token && user ? (
             <Navigate to={userCategoryPath} replace />

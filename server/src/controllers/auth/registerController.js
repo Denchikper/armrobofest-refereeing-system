@@ -16,7 +16,7 @@ exports.register = async (req, res) => {
   console.log(category_id)
 
   try {
-    const login_code = await generateLoginCode();
+    const login_code = await generateLoginCode(3);
     let newUser = null;
 
     if(role === 'judge') { 

@@ -1,5 +1,10 @@
+import HealthWrapper from "./components/HealthWrapper.jsx";
 import AppRouter from "./router/AppRouter.jsx";
 
 export default function App() {
-  return <AppRouter />;
+  return (
+    <HealthWrapper>
+      <AppRouter />
+    </HealthWrapper>
+  );
 }

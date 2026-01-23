@@ -7,6 +7,12 @@ try {
         body: JSON.stringify(payload)
      }, logout, navigate);
     let data = response.data;
+
+     if (!response.ok) {
+      console.error(data.message || "Ошибка при авторизации");
+      return { ok: false, status: response.status, data };
+    }
+
     return data;
   } catch (err) {
     if (err.name === "TypeError") {

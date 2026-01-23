@@ -1,18 +1,18 @@
-const Participant = require('../../models/participants');
-
 const logger = require('../../services/loggerNew/logger');
 const Team = require('../../models/teams');
-const Organization = require('../../models/organizations');
-const { Judge } = require('../../models');
+
 const { generateTokenPart } = require('../../services/jwtUtils');
+const Organization = require('../../models/organizations');
+const Participant = require('../../models/participants');
+const Judge = require('../../models/judges');
 
 exports.loginParticipant = async (req, res) => {
   const { login_code } = req.body;
-
   const judgeId = req.user.sub;
-  const judge = await Judge.findOne({ where: { id: judgeId } });
 
   try {
+    const judge = await Judge.findOne({ where: { id: judgeId } });
+
     const participant = await Participant.findOne({ 
       where: { login_code },
       include: [Organization, Team]

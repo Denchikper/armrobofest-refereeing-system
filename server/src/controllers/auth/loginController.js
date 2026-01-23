@@ -1,9 +1,9 @@
 const Organizer = require('../../models/organizers');
 const Judge = require('../../models/judges');
-const { Organization } = require('../../models');
 
 const logger = require('../../services/loggerNew/logger');
 const { generateToken } = require('../../services/jwtUtils');
+const Organization = require('../../models/organizations');
 
 exports.login = async (req, res) => {
   const { login_code } = req.body;

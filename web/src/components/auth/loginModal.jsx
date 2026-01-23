@@ -31,6 +31,7 @@ export default function LoginModal({ upText, hasJudgePanel = false, loginType, i
       const res = await loginParticapentRes(userToken, { login_code: code }, logout, navigate);
 
       if (res && res.ok === false) {
+        console.log(res);
         setError(res.data.message);
       } else {
         loginParticapent(res.accessToken, res.user, "/participant");

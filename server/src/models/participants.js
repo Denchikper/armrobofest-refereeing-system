@@ -9,44 +9,44 @@ const Participant = sequelize.define('Participant', {
   },
   first_name: {
     type: DataTypes.STRING,
-    allowNull: true
-  },
-  last_name: {
-    type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   second_name: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
+  },
+  last_name: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   organization_id: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
   },
   team_id: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
+  },
+  pod_team_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
   class: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
   },
   login_code: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: true
+    allowNull: false
   },
-  supervisor_full_name: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  category_id: {               // ✅ добавляем категорию
+  category_id: {
     type: DataTypes.INTEGER,
     allowNull: false
   }
 }, {
   tableName: 'participants',
-  timestamps: false,
+  timestamps: true,
   underscored: true
 });
 
