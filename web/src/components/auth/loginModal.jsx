@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { loginParticapentRes } from "../../api/authParticapent";
 import loginUser from "../../api/authMain";
-import { motion } from "framer-motion";
 import { getCategoryPath } from "../../utils/getCategoryPath";
 
-export default function LoginModal({ upText, hasJudgePanel = false, loginType, isUser = false, userToken, login, logout, loginParticapent, navigate }) {
+export default function LoginModal({ upText, hasJudgePanel = false, loginType, isUser = false, userToken, login, logout, path, loginParticapent, navigate }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState(null);
 
@@ -34,7 +33,7 @@ export default function LoginModal({ upText, hasJudgePanel = false, loginType, i
         console.log(res);
         setError(res.data.message);
       } else {
-        loginParticapent(res.accessToken, res.user, "/participant");
+        loginParticapent(res.accessToken, res.user, path);
       }
     } else if (loginType === "user") {
       const res = await loginUser({ login_code: code });
@@ -44,6 +43,7 @@ export default function LoginModal({ upText, hasJudgePanel = false, loginType, i
       } else {
         const token = res.accessToken;
         const user = res.user;
+        console.log(user);
         login(token, user, getCategoryPath(user));
         }
     }

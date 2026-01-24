@@ -10,6 +10,7 @@ import MissionOne from "../pages/robotics/practic/MissionOne.jsx";
 import MissionTwo from "../pages/robotics/practic/MissionTwo.jsx";
 import MissionThree from "../pages/robotics/practic/MissionThree.jsx";
 import OrganizatorMain from "../pages/organizators/organizatorMain.jsx";
+import TeoriaParticipant from "../pages/robotics/teoria/TeoriaParticipant.jsx";
 
 export default function AppRouter() {
   const { token, user, loading, particapent } = useAuth();
@@ -25,9 +26,7 @@ export default function AppRouter() {
       <Route
         path="/"
         element={
-          token && particapent && user ? (
-            <Navigate to="/participant" replace />
-          ) : token && user ? (
+            token && user ? (
             <Navigate to={userCategoryPath} replace />
           ) : (
             <Login />
@@ -39,7 +38,7 @@ export default function AppRouter() {
       <Route
         path="/organizator"
         element={
-          token && user && user.role === "Организатор" ? (
+          token && user && user.role === "Oragnizer" ? (
             <OrganizatorMain />
           ) : (
             <Navigate to="/" replace />
@@ -99,11 +98,10 @@ export default function AppRouter() {
         }
       />
       
-      {/* Теория: вход участника (для судьи) */}
       <Route
         path="/robotics/teoria/loginPaticapent"
         element={
-          token && user && allowToGoCategory(user, 2) ? (
+          token && user && allowToGoCategory(user, 1, { isItRoboticsTheory: true }) ? (
             <TeoriaLoginPaticapent />
           ) : (
             <Navigate to={token ? userCategoryPath : "/"} replace />
@@ -113,7 +111,7 @@ export default function AppRouter() {
       
       {/* Участник: главная страница */}
       <Route
-        path="/participant"
+        path="/robotics/practic/participant"
         element={
           token && particapent && user && allowToGoCategory(user, 1) ? (
             <ParticipantMain />
@@ -125,6 +123,19 @@ export default function AppRouter() {
         }
       />
       
+      <Route
+        path="/robotics/teoria/participant"
+        element={
+          token && particapent && user && allowToGoCategory(user, 1, { isItRoboticsTheory: true }) ? (
+            <TeoriaParticipant />
+          ) : token ? (
+            <Navigate to="/robotics/teoria/loginPaticapent" replace />
+          ) : (
+            <Navigate to="/" replace />
+          )
+        }
+      />
+
       <Route path="/login" element={<Login />} />
       
       <Route path="*" element={<Navigate to="/" replace />} />

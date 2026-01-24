@@ -15,20 +15,22 @@ exports.login = async (req, res) => {
     });
 
     if (judge) {
-      const token = generateToken(judge.id, 'Судья');
+      const token = generateToken(judge.id, 'Judge');
       logger.auth.login(login_code, judge.id, false);
       const response = {
         accessToken: token,
         user: {
           userId: judge.id,
-          role: 'Судья',
+          role: 'Judge',
           firstName: judge.first_name,
           lastName: judge.last_name,
           secondName: judge.second_name,
           organizationName: judge.Organization.name,
+          isRoboticsTheory: judge.isRoboticsTheory,
           categoryId: judge.category_id
         }
       }
+      console.log(response);
       return res.status(200).json(response);
     }
 
@@ -39,13 +41,13 @@ exports.login = async (req, res) => {
         message: 'Неверный код для входа' 
       });
     }
-    const token = generateToken(organizer.id, 'Организатор');
+    const token = generateToken(organizer.id, 'Organizer');
 
     const response = {
       accessToken: token,
       user: {
         userId: organizer.id,
-        role: 'Организатор',
+        role: 'Organizer',
         firstName: organizer.first_name,  
         lastName: organizer.last_name,  
         secondName: organizer.second_name,

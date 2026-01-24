@@ -24,6 +24,7 @@ export default function PracticLoginPaticapent() {
           upText="ВВЕДИТЕ КОД УЧАСТНИКА" 
           hasJudgePanel={true} 
           loginType="particapent"
+          path="/robotics/practic/participant"
           userToken={token} 
           login={login}
           logout={logout}

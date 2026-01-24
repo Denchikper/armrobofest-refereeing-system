@@ -5,7 +5,6 @@ import MissionResultTotal from "./MissionResultTotal";
 export default function MissionResultBlock({ items: initialItems }) {
   const [items, setItems] = useState([]);
 
-  // ✅ чтобы при смене миссии данные обновлялись
   useEffect(() => {
     setItems(initialItems);
   }, [initialItems]);

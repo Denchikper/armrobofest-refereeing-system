@@ -7,7 +7,7 @@ async function syncDatabase() {
     await sequelize.sync({ alter: true });
     logger.db.success('Синхронизация базы данных завершена!');
   } catch (err) {
-    db.error('Ошибка при синхронизации базы данных:', err);
+    logger.db.error('Ошибка при синхронизации базы данных:', err);
     throw err;
   }
 }

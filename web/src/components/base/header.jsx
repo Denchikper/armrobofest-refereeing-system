@@ -59,7 +59,7 @@ export default function Header({ olympiadText, upJudgeOn, upJudge }) {
               <p className="text-3xl futura-heavy text-[#2E2E2E]">
                 {formatJudgeName(upJudge)}
               </p>
-              <p className="text-xl futura-medium -mt-2 text-[#909090]">{upJudge.role || "Cудья"}</p>
+              <p className="text-xl futura-medium -mt-2 text-[#909090]">Cудья</p>
             </div>
           </div>
         )}

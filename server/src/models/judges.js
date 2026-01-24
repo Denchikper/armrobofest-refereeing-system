@@ -11,7 +11,7 @@ const Judge = sequelize.define('Judge', {
   first_name: DataTypes.STRING,
   last_name: DataTypes.STRING,
   second_name: DataTypes.STRING,
-
+  isRoboticsTheory: DataTypes.BOOLEAN,
   organization_id: {
     type: DataTypes.INTEGER,
     allowNull: true

@@ -2,11 +2,14 @@ export const getCategoryPath = (user) => {
   if (!user || !user.role) return "/";
   
   switch (user.role) {
-    case "Организатор":
+    case "Oragnizer":
       return "/organizator";
-    case "Судья":
+    case "Judge":
       switch (user.categoryId) {
         case 1:
+          if (user.isRoboticsTheory) {
+            return "/robotics/teoria/loginPaticapent";
+          }
           return "/robotics/practic/loginPaticapent";
         case 2:
           return "/robotics/teoria/loginPaticapent";

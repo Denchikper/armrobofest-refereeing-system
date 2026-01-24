@@ -1,6 +1,6 @@
 import Header from "../../../components/base/Header";
 import BackgroundImages from "../../../components/base/BackgroundImages";
-import LoginModal from "../../../components/auth/LoginModal";
+import LoginModal from "../../../components/auth/loginModal";
 import MiniFooter from "../../../components/base/MiniFooter";
 import JudgePanel from "../../../components/categories/JudgePanel";
 import { useAuth } from "../../../context/AuthContext";
@@ -29,6 +29,7 @@ export default function PracticLoginPaticapent() {
           upText="ВВЕДИТЕ КОД УЧАСТНИКА" 
           hasJudgePanel={true} 
           loginType="particapent"
+          path="/robotics/teoria/participant"
           userToken={token} 
           login={login}
           logout={logout}
