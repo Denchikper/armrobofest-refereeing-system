@@ -11,5 +11,6 @@ router.use('/ping', requestLogger, require('./ping.route'));
 
 router.use('/user/get-profile', requestLogger, require('./protected/getProfile.route'));
 
+router.use('/missions', requestLogger, require('./Missions/Missions.route'));
 
 module.exports = router;

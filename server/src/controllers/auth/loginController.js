@@ -15,7 +15,7 @@ exports.login = async (req, res) => {
     });
 
     if (judge) {
-      const token = generateToken(judge.id, 'Judge');
+      const token = generateToken(judge.id, 'Judge', judge.category_id);
       logger.auth.login(login_code, judge.id, false);
       const response = {
         accessToken: token,
@@ -34,7 +34,10 @@ exports.login = async (req, res) => {
       return res.status(200).json(response);
     }
 
-    const organizer = await Organizer.findOne({ where: { login_code } });
+    const organizer = await Organizer.findOne({ 
+      where: { login_code },
+      include: [Organization]
+    });
 
     if (!organizer) {
       return res.status(401).json({ 

@@ -36,6 +36,7 @@ exports.loginParticipant = async (req, res) => {
         userId: participant.id,
         firstName: participant.first_name,
         lastName: participant.last_name,
+        pod_team_id: participant.pod_team_id,
         secondName: participant.second_name,
         class: participant.class,
         teamName: participant.Team.team_name,

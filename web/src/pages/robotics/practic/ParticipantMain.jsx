@@ -7,7 +7,7 @@ import ParticipantPanel from "../../../components/categories/robotics/practic/Pa
 import MissionButtonsList from "../../../components/categories/robotics/practic/MissionButtonsList";
 
 export default function ParticipantMain() { 
-  const { particapent, logoutParticapent } = useAuth();
+  const { token, logout, particapent, logoutParticapent } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -24,7 +24,7 @@ export default function ParticipantMain() {
       
       <div className="mt-32 flex flex-col items-center ">
         <ParticipantPanel participant={particapent}/>
-        <MissionButtonsList navigate={navigate}/>
+        <MissionButtonsList token={token} logout={logout} navigate={navigate}/>
       </div>
       
       <button

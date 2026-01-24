@@ -10,9 +10,9 @@ export const getCategoryPath = (user) => {
           if (user.isRoboticsTheory) {
             return "/robotics/teoria/loginPaticapent";
           }
-          return "/robotics/practic/loginPaticapent";
-        case 2:
-          return "/robotics/teoria/loginPaticapent";
+          return "/robotics/practic/loginPaticapent"; 
+        case 3:
+          return "/threeatlon/loginPaticapent";
         default:
           return "/";
       }

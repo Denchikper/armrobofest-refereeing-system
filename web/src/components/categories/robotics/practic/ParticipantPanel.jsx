@@ -9,7 +9,7 @@ export default function ParticipantPanel({participant}) {
           <p className="text-3xl text-[#2E2E2E] futura-heavy">{participant.secondName} {participant.lastName}</p>
           <div className="flex items-center justify-center gap-4 mt-2">
             <p className="futura-demi text-xl text-[#2E2E2E]"> {participant.class} класс</p>
-            <div className="text-white futura-demi text-2xl bg-[#3AC318] rounded-lg px-2">{participant.teamName}</div>
+            <div className="text-white futura-demi text-2xl bg-[#3AC318] rounded-lg px-2">{participant.teamName}/{participant.pod_team_id}</div>
           </div>
           <p className=" futura-demi text-lg mt-2 text-[#2E2E2E]">{participant.organizationName}</p>
       </div>

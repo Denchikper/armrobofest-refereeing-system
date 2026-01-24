@@ -1,16 +1,17 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "../pages/auth/login.jsx";
-import TeoriaLoginPaticapent from "../pages/robotics/teoria/TeoriaLoginPaticapent.jsx";
-import PracticLoginPaticapent from "../pages/robotics/practic/PracticLoginPaticapent.jsx";
+
 import { useAuth } from "../context/AuthContext.jsx";
 import { getCategoryPath } from "../utils/getCategoryPath.js";
 import { allowToGoCategory } from "../utils/allowToGoCategory.js";
+
+import Login from "../pages/auth/login.jsx";
+import TeoriaLoginPaticapent from "../pages/robotics/teoria/TeoriaLoginPaticapent.jsx";
+import PracticLoginPaticapent from "../pages/robotics/practic/PracticLoginPaticapent.jsx";
 import ParticipantMain from "../pages/robotics/practic/ParticipantMain.jsx";
-import MissionOne from "../pages/robotics/practic/MissionOne.jsx";
-import MissionTwo from "../pages/robotics/practic/MissionTwo.jsx";
-import MissionThree from "../pages/robotics/practic/MissionThree.jsx";
 import OrganizatorMain from "../pages/organizators/organizatorMain.jsx";
 import TeoriaParticipant from "../pages/robotics/teoria/TeoriaParticipant.jsx";
+import Mission from "../pages/robotics/practic/Mission.jsx";
+import ThreeatlonLoginPaticapent from "../pages/Threeatlon/ThreeatlonLoginPaticapent.jsx";
 
 export default function AppRouter() {
   const { token, user, loading, particapent } = useAuth();
@@ -26,7 +27,9 @@ export default function AppRouter() {
       <Route
         path="/"
         element={
-            token && user ? (
+            token && user && user.role === "Organizer" ? (
+            <OrganizatorMain />
+          ) : token && user && user.role === "Judge"? (
             <Navigate to={userCategoryPath} replace />
           ) : (
             <Login />
@@ -38,7 +41,7 @@ export default function AppRouter() {
       <Route
         path="/organizator"
         element={
-          token && user && user.role === "Oragnizer" ? (
+          token && user && user.role === "Organizer" ? (
             <OrganizatorMain />
           ) : (
             <Navigate to="/" replace />
@@ -57,39 +60,24 @@ export default function AppRouter() {
           )
         }
       />
+
+        <Route
+        path="/threeatlon/loginPaticapent"
+        element={
+          token && user && allowToGoCategory(user, 3) ? (
+            <ThreeatlonLoginPaticapent />
+          ) : (
+            <Navigate to={token ? userCategoryPath : "/"} replace />
+          )
+        }
+      />
       
       {/* Практика: миссии (для участника) */}
       <Route
-        path="/robotics/practic/missionOne"
+        path="/robotics/practic/mission"
         element={
           token && particapent && user && allowToGoCategory(user, 1) ? (
-            <MissionOne />
-          ) : token ? (
-            <Navigate to="/robotics/practic/loginPaticapent" replace />
-          ) : (
-            <Navigate to="/" replace />
-          )
-        }
-      />
-      
-      <Route
-        path="/robotics/practic/missionTwo"
-        element={
-          token && particapent && user && allowToGoCategory(user, 1) ? (
-            <MissionTwo />
-          ) : token ? (
-            <Navigate to="/robotics/practic/loginPaticapent" replace />
-          ) : (
-            <Navigate to="/" replace />
-          )
-        }
-      />
-      
-      <Route
-        path="/robotics/practic/missionThree"
-        element={
-          token && particapent && user && allowToGoCategory(user, 1) ? (
-            <MissionThree />
+            <Mission />
           ) : token ? (
             <Navigate to="/robotics/practic/loginPaticapent" replace />
           ) : (

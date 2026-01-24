@@ -2,8 +2,9 @@ import { useState } from "react";
 import { loginParticapentRes } from "../../api/authParticapent";
 import loginUser from "../../api/authMain";
 import { getCategoryPath } from "../../utils/getCategoryPath";
+import { GetMissonsApi } from "../../api/Mission";
 
-export default function LoginModal({ upText, hasJudgePanel = false, loginType, isUser = false, userToken, login, logout, path, loginParticapent, navigate }) {
+export default function LoginModal({ upText, hasJudgePanel = false, loginType, loginPage, isUser = false, userToken, login, logout, path, loginParticapent, navigate }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState(null);
 
@@ -28,6 +29,18 @@ export default function LoginModal({ upText, hasJudgePanel = false, loginType, i
 
     if (loginType === "particapent") {
       const res = await loginParticapentRes(userToken, { login_code: code }, logout, navigate);
+      if (loginPage === "theory") {
+        const result = await GetMissonsApi(userToken, logout, navigate);
+        if (res && res.ok === false) {
+          setError(res.data.message);
+        }
+        if (result?.data?.missions[0]?.enabled) {
+          loginParticapent(res.accessToken, res.user, path);
+        } else {
+          setError("Раздел закрыт");
+          return;
+        }
+      }
 
       if (res && res.ok === false) {
         console.log(res);
@@ -43,7 +56,6 @@ export default function LoginModal({ upText, hasJudgePanel = false, loginType, i
       } else {
         const token = res.accessToken;
         const user = res.user;
-        console.log(user);
         login(token, user, getCategoryPath(user));
         }
     }

@@ -1,4 +1,4 @@
-export default function MissionButton({ disabled = false, numMission, onClick}) {
+export default function MissionButton({title, disabled = false, onClick}) {
   return (
     <button
       disabled={disabled}
@@ -9,8 +9,7 @@ export default function MissionButton({ disabled = false, numMission, onClick}) 
           : 'bg-[#3AC318] text-white hover:bg-[#3AC318]/80'
         }`}
     >
-      <span className="text-2xl font-bold">{numMission}</span>
-      МИССИЯ
+      {title}
       
       <img 
         src={disabled ? "/icons/back_gray.svg" : "/icons/back_white.svg"} 

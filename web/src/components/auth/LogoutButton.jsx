@@ -6,7 +6,7 @@ export default function LogoutButton({logout}) {
   return (
     <button
         onClick={logout}
-        className="flex items-center justify-center gap-3 bottom-[10%] futura-heavy text-xl absolute left-1/2 -translate-x-1/2 px-10 py-3 bg-[#FFDDDD] text-[#EE2222] rounded-4xl  shadow-md z-50"
+        className="flex fixed bottom-20 items-center justify-center gap-3  futura-heavy text-xl left-1/2 -translate-x-1/2 px-10 py-3 bg-[#FFDDDD] text-[#EE2222] rounded-4xl  shadow-md z-50"
         >
         ВЫЙТИ
         <img 

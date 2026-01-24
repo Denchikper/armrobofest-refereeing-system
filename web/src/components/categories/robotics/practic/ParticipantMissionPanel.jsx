@@ -10,7 +10,7 @@ export default function ParticipantMissionPanel({ participant }) {
           {participant.firstName} {participant.secondName} {participant.lastName} |
             </p>
             <p className="text-[20px] futura-demi text-[#2E2E2E] ">{participant.class} класс</p>
-            <div className="text-white futura-demi ml-1 text-2xl bg-[#3AC318] rounded-lg px-2">{participant.teamName}</div>
+            <div className="text-white futura-demi ml-1 text-2xl bg-[#3AC318] rounded-lg px-2">{participant.teamName}/{participant.pod_team_id}</div>
 
         </div>
         

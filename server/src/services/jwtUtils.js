@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = 3600 * 2;
 
-const generateToken = (userId, role) => {
+const generateToken = (userId, role, category_id) => {
   if (!JWT_SECRET) {
     throw new Error('JWT_SECRET не установлен в переменных окружения');
   }
@@ -14,6 +14,7 @@ const generateToken = (userId, role) => {
   const payload = {
     sub: userId,
     role: role,
+    categoryId: category_id,
     iat: currentTime,
     exp: expiresAt
   };
@@ -91,6 +92,7 @@ const getTokenInfo = (token) => {
   return {
     sub: decoded.payload.sub,
     role: decoded.payload.role,
+    categoryId: decoded.payload.categoryId,
     issuedAt: new Date(decoded.payload.iat * 1000).toISOString(),
     expiresIn: expiresIn > 0 ? expiresIn : 0,
   };

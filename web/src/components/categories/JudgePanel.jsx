@@ -3,7 +3,7 @@ export default function JudgePanel({judge, icon}) {
     return null; // или можно показать skeleton / loader
   }
   return (
-    <div className="fixed top-[11%] left-1/2 -translate-x-1/2 z-50">
+    <div className="relative left-1/2 -translate-x-1/2 z-50">
       <div className="p-6 text-center">
          <img 
             src={`/icons/${icon}.svg`} 

@@ -2,12 +2,26 @@ import { API_BASE_URL } from "../config";
 import { jwtDecode } from "jwt-decode";
 
 function isTokenValid(token) {
-  if (!token) return false;
+  if (!token || typeof token !== 'string' || token.trim() === '') {
+    return false;
+  }
+
   try {
     const decoded = jwtDecode(token);
-    if (!decoded.exp) return false;
+    
+    if (!decoded || typeof decoded !== 'object') {
+      return false;
+    }
+    
+    if (!decoded.exp || typeof decoded.exp !== 'number') {
+      return false;
+    }
+    
     const nowInSeconds = Math.floor(Date.now() / 1000);
-    return nowInSeconds < decoded.exp;
+    const buffer = 30; // 30 секунд запаса на задержки сети
+    
+    return nowInSeconds < (decoded.exp - buffer);
+    
   } catch (error) {
     console.error('Token validation error:', error);
     return false;
@@ -31,6 +45,7 @@ export async function fetchWithAuth(token, url, options = {}, logout, navigate) 
         ...(options.headers || {}),
       },
     });
+    
     let data;
     try { data = await res.json(); } catch { data = await res.text(); }
 

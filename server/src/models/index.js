@@ -5,6 +5,7 @@ const Judge = require('./judges');
 const Organizer = require('./organizers');
 const Category = require('./categories');
 const Mission = require('./missions');
+const TheoryTest = require('./theoryTests');
 
 Mission.belongsTo(Category, { foreignKey: 'category_id' });
 

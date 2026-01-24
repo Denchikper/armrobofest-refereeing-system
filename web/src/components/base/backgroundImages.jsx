@@ -4,7 +4,7 @@ export default function BackgroundImages() {
       <img 
         src="/images/Chain glass 1.svg" 
         alt="background left" 
-        className="absolute left-[0%] top-[20%] w-[10 %] "
+        className="absolute left-[0%] top-[20%] w-[10%] "
       />
       {/* Левое изображение - справа сверху */}
       <img 
