@@ -37,7 +37,8 @@ const COLORS = {
         auth: chalk.white.bgMagenta.bold(' AUTH '),
         server: chalk.bgHex("#b3ff00").white.bold(' <SR> '),
         db: chalk.black.bgHex("#d9ead3").bold(' <DB> '),
-        fraud_rules: chalk.white.bgHex("#3500c5").bold(' <FR> ')
+        fraud_rules: chalk.white.bgHex("#3500c5").bold(' <FR> '),
+        google: chalk.white.bgHex("#a4c6fc").bold(' <GG> '),
     },
     status: {
         200: chalk.green,

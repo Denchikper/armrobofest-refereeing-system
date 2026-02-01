@@ -54,6 +54,18 @@ if (process.env.NODE_ENV !== 'p') {
             prefix = chalk.bgHex('#d9ead3').black(' DB ');
             formatted = `${prefix} - ${chalk.bgRed.white(' ERROR ')} - ${message}`;
             break;
+          case 'api_success':
+            prefix = chalk.bgHex('#a4c6fc').black(' API ');
+            formatted = `${prefix} - ${chalk.bgGreen.black(' SUCCESS ')} - ${message}`;
+            break;
+          case 'api_warn':
+            prefix = chalk.bgHex('#a4c6fc').black(' API ');
+            formatted = `${prefix} - ${chalk.bgYellow.black(' WARN ')} - ${message}`;
+            break;
+          case 'api_error':
+            prefix = chalk.bgHex('#a4c6fc').black(' DB ');
+            formatted = `${prefix} - ${chalk.bgRed.white(' ERROR ')} - ${message}`;
+            break;
           case 'server_error':
             prefix = chalk.bgRed.white(' SR ');
             formatted = `${prefix} - ${chalk.bgRed.white(' ERROR ')} - ${message}`;
