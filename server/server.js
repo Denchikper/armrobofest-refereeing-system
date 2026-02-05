@@ -8,6 +8,7 @@ const app = require('./src/app');
 const { testConnectionDB } = require('./src/test/testConnectionDB');
 const { syncDatabase } = require('./src/utils/databaseSync');
 const logger = require('./src/services/loggerNew/logger');
+const TestConnectToGoogle = require('./src/test/testConnectionGoogle');
 
 const SERVER_PORT = process.env.SERVER_PORT;
 const SERVER_IP = process.env.SERVER_IP;
@@ -18,6 +19,7 @@ const startServer = async () => {
   try {
     await testConnectionDB();
     await syncDatabase();
+    await TestConnectToGoogle();
 
     app.listen(SERVER_PORT, SERVER_IP, () => {
       logger.server.start_success(`http://${SERVER_IP}:${SERVER_PORT}`)

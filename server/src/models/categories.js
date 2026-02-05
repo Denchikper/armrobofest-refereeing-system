@@ -9,6 +9,10 @@ const Category = sequelize.define('Category', {
   name: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  sheetId: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 }, {
   tableName: 'categories',

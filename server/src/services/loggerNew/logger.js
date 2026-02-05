@@ -118,6 +118,28 @@ const logger = {
         }
     },
 
+    google: {
+        error: (message, err, requestId = generateRequestId()) => {
+            const timestamp = COLORS.timestamp(getTimestamp());
+            const module = COLORS.modules.google;
+            const icon = COLORS.error(`[${ICONS.error}]`);
+            const reqId = COLORS.reqId(`[${requestId || generateRequestId()}]`);
+            
+            console.log(`${timestamp}  |  ${module} ${icon} ${message} ${reqId}`);
+            console.log(err)
+            return requestId;
+        },
+        success: (message, requestId = generateRequestId()) => {
+            const timestamp = COLORS.timestamp(getTimestamp());
+            const module = COLORS.modules.google;
+            const icon = COLORS.success(`[${ICONS.success}]`);
+            const reqId = COLORS.reqId(`[${requestId || generateRequestId()}]`);
+            
+            console.log(`${timestamp}  |  ${module} ${icon} ${message} ${reqId}`);
+            return requestId;
+        },
+    },
+
     db: {
         success: (message, requestId = generateRequestId()) => {
             const timestamp = COLORS.timestamp(getTimestamp());
