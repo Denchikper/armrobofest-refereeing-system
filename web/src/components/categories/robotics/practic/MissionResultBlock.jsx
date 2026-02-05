@@ -16,7 +16,7 @@ export default function MissionResultBlock({ items: initialItems }) {
       )
     );
   };
-
+  
   const total = items.reduce(
     (sum, item) => sum + (item.checked ? item.points : 0),
     0
