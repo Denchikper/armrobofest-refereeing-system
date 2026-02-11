@@ -9,6 +9,9 @@ export default function MissionResultBlock({ items: initialItems }) {
     setItems(initialItems);
   }, [initialItems]);
 
+  items.map((item, index) => console.log(item))
+
+
   const toggleItem = (id) => {
     setItems(prev =>
       prev.map(item =>
