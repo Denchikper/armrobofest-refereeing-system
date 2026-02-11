@@ -16,7 +16,7 @@ export default function Mission() {
 
   const navigate = useNavigate();
 
-  const missionOneItems = mission.criteria.missionCriteria
+  const missionItems = mission.criteria.missionCriteria
   
   const handleLogout = () => {
     deleteMissionStorage();
@@ -33,7 +33,7 @@ export default function Mission() {
       <BackgroundImagesGray/>
       <NameMission title={mission?.name}/>
       <ParticipantMissionPanel participant={particapent}/>
-      <MissionResultBlock items={missionOneItems}/>
+      <MissionResultBlock items={missionItems}/>
       <MissionFooterMenu navigate={navigate} logoutParticapent={logoutParticapent}/>
       <BackButton onClick={handleLogout}/>
       <MiniFooter/>

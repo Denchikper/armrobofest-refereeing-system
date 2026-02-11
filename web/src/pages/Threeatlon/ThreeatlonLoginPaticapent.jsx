@@ -26,7 +26,7 @@ export default function ThreeatlonLoginPaticapent() {
           upText="ВВЕДИТЕ КОД УЧАСТНИКА" 
           hasJudgePanel={true} 
           loginType="particapent"
-          path="/robotics/threeatlon/participant"
+          path="/threeatlon/participant"
           userToken={token} 
           login={login}
           logout={logout}

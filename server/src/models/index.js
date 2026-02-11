@@ -5,7 +5,7 @@ const Judge = require('./judges');
 const Organizer = require('./organizers');
 const Category = require('./categories');
 const Mission = require('./missions');
-const TheoryTest = require('./theoryTests');
+const Result = require('./results')
 
 Mission.belongsTo(Category, { foreignKey: 'category_id' });
 
@@ -17,6 +17,16 @@ Category.hasMany(Organizer, { foreignKey: 'category_id' });
 Participant.belongsTo(Organization, { foreignKey: 'organization_id' });
 Participant.belongsTo(Team, { foreignKey: 'team_id' });
 Participant.belongsTo(Category, { foreignKey: 'category_id' });
+
+Result.belongsTo(Participant, { foreignKey: 'participant_id' });
+Result.belongsTo(Judge, { foreignKey: 'judge_id' });
+Result.belongsTo(Mission, { foreignKey: 'mission_id' });
+
+// Связи для Result
+Participant.hasMany(Result, { foreignKey: 'participant_id' })
+Judge.hasMany(Result, { foreignKey: 'judge_id' })
+Mission.hasMany(Result, { foreignKey: 'mission_id' })
+
 
 // Связи для Judge
 Judge.belongsTo(Organization, { foreignKey: 'organization_id' });

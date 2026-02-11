@@ -9,6 +9,9 @@ export default function MissionResultBlock({ items: initialItems }) {
     setItems(initialItems);
   }, [initialItems]);
 
+  items.map((item, index) => console.log(item))
+
+
   const toggleItem = (id) => {
     setItems(prev =>
       prev.map(item =>
@@ -16,7 +19,7 @@ export default function MissionResultBlock({ items: initialItems }) {
       )
     );
   };
-
+  
   const total = items.reduce(
     (sum, item) => sum + (item.checked ? item.points : 0),
     0

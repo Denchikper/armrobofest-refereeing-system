@@ -19,7 +19,6 @@ export default function MissionButtonsList({ token, logout, navigate, categoryId
           const filteredMissions = result.data.missions
             .filter(mission => mission.category_id === categoryId)
             .sort((a, b) => a.mission_number - b.mission_number);
-          delete filteredMissions[0];
           setMissions(filteredMissions);
         }
       } catch (err) {
@@ -58,9 +57,12 @@ export default function MissionButtonsList({ token, logout, navigate, categoryId
             disabled={!mission.enabled}
             isClosed={!mission.enabled}
             onClick={() => {
-              if (mission.enabled) {
+              if (mission.enabled && categoryId == 1) {
                 setMissionStorage(mission);
                 navigate(`/robotics/practic/mission`);
+              } if (mission.enabled && categoryId == 3) {
+                setMissionStorage(mission);
+                navigate(`/threeatlon/mission`);
               }
             }}
           />

@@ -1,0 +1,19 @@
+{
+  "missionCriteria": [
+    {
+        "id": 1,
+        "criteria": [
+            { "id": 1, "text": "Выход со старта", "points": 15},
+            { "id": 2, "text": "1 участок + разворот", "points": 10},
+            { "id": 3, "text": "2 участок + разворот", "points": 10},
+            { "id": 4, "text": "3 участок + разворот", "points": 10},
+            { "id": 5, "text": "4 участок + разворот", "points": 10},
+            { "id": 6, "type": "block-one-check", "name": "Финиш", "missions-block": [
+                { "id": 1, "text": "Частично", "points": 10 },
+                { "id": 2, "text": "Полностью", "points": 20 }
+            ]},
+            {"id": "time", "type": "time"}
+        ]
+    }
+  ]
+}
