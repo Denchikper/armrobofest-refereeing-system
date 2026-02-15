@@ -515,7 +515,7 @@ export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, on
     <div className="w-full border border-gray-200 rounded-lg p-4 mb-4">
       <div className="flex justify-between items-center mb-3 pb-2 border-b border-gray-100">
         <h4 className="text-[18px] futura-demi text-gray-700">
-          Задача: {task.name || `Задание ${task.id}`}
+          Задача {task.id}:
         </h4>
         <div className="text-[16px] futura-demi bg-gray-100 px-3 py-1 rounded-full">
           <span className={taskScore.current < 0 ? "text-red-500" : "text-[#3AC318]"}>
