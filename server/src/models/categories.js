@@ -12,7 +12,7 @@ const Category = sequelize.define('Category', {
   },
   sheetId: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   }
 }, {
   tableName: 'categories',

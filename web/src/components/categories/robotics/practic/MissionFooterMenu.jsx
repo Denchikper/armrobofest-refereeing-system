@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 
-export default function MissionFooterMenu({ navigate, logoutParticapent }) {
+export default function MissionFooterMenu({ navigate, logoutParticapent, onComplete }) {
   const [isReady, setIsReady] = useState(false);
 
   const handleCompleteMission = () => {
-
-    if (navigate) {
-      navigate(-1);
+    if (onComplete) {
+      onComplete(); // Вызываем переданную функцию
+    } else {
+      // Старое поведение, если onComplete не передан
+      if (navigate) {
+        navigate(-1);
+      }
     }
   };
 
-  return (
-    <div className="fixed bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 p-6 w-full max-w-2xl">
+  return ( 
+    <div className="flex flex-col items-center gap-6 p-6 w-full max-w-2xl mx-auto">
       
       <div className="flex items-center justify-center cursor-pointer" onClick={() => setIsReady(!isReady)}>
         <div className="flex items-center justify-center w-6 h-6 border-2 border-gray-400 rounded-full mr-4">

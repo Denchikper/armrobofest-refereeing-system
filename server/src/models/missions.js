@@ -27,6 +27,9 @@ const Mission = sequelize.define('Mision', {
   criteria: {
     type: DataTypes.JSON,
     allowNull: false,
+  },
+  table_id: {
+    type: DataTypes.STRING,
   }
 }, {
   tableName: 'missions',
