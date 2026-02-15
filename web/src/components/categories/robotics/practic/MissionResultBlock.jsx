@@ -2,7 +2,7 @@ import { useState, useEffect, useImperativeHandle, forwardRef } from "react";
 import MissionTaskBlock from "./MissionTaskBlock";
 import MissionResultTotal from "./MissionResultTotal";
 
-const MissionResultBlock = forwardRef(({ items: initialItems, onMissionTimeChange }, ref) => {
+const MissionResultBlock = forwardRef(({ items: initialItems, onMissionTimeChange, missionId }, ref) => {
   const [tasks, setTasks] = useState([]);
   const [taskScores, setTaskScores] = useState({});
   const [taskTimes, setTaskTimes] = useState({});
@@ -116,6 +116,7 @@ const MissionResultBlock = forwardRef(({ items: initialItems, onMissionTimeChang
           <MissionTaskBlock
             key={task.id}
             task={task}
+            missionId={missionId}
             onScoreChange={handleTaskScoreChange}
             onTimeChange={handleTaskTimeChange}
             onResultsChange={handleTaskResultsChange}

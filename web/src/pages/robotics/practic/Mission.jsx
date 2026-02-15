@@ -17,7 +17,6 @@ export default function Mission() {
   const { mission, deleteMissionStorage } = useMissionContext();
   const navigate = useNavigate();
   const missionResultRef = useRef();
-  
   const [missionScore, setMissionScore] = useState({ current: 0, max: 0 });
 
   const missionItems = mission.criteria.missionCriteria
@@ -65,6 +64,7 @@ export default function Mission() {
       <div className="flex-1">
         <MissionResultBlock 
           ref={missionResultRef}
+          missionId={mission.id}
           items={missionItems}
           onMissionScoreChange={handleMissionScoreChange}
         />

@@ -5,7 +5,7 @@ import MissionBlockItem from "./MissionBlockItem";
 import MissionTimeItem from "./MissionTimeItem";
 import MissionSingleCounter from "./MissionSingleCounter";
 
-export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, onResultsChange }) {
+export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, onResultsChange, missionId }) {
   const [criteria, setCriteria] = useState([]);
   const [selectedBlockOptions, setSelectedBlockOptions] = useState({});
   const [penaltyBlockData, setPenaltyBlockData] = useState({});
@@ -140,141 +140,200 @@ export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, on
   }, [criteria, selectedBlockOptions, penaltyBlockData, singleCounterData]);
 
   const calculateTaskScore = () => {
-  // Баллы за обычные критерии (чекбоксы)
-  const regularScore = criteria
-    .filter(item => item.type !== "block-one-check" && item.type !== "time" && item.type !== "block" && item.type !== "block-fines" && item.type !== "counter")
-    .reduce((sum, item) => sum + (item.checked ? (item.points || 0) : 0), 0);
+    // Баллы за обычные критерии (чекбоксы)
+    const regularScore = criteria
+      .filter(item => item.type !== "block-one-check" && item.type !== "time" && item.type !== "block" && item.type !== "block-fines" && item.type !== "counter")
+      .reduce((sum, item) => sum + (item.checked ? (item.points || 0) : 0), 0);
 
-  const regularMax = criteria
-    .filter(item => item.type !== "block-one-check" && item.type !== "time" && item.type !== "block" && item.type !== "block-fines" && item.type !== "counter")
-    .reduce((sum, item) => sum + (item.points || 0), 0);
+    const regularMax = criteria
+      .filter(item => item.type !== "block-one-check" && item.type !== "time" && item.type !== "block" && item.type !== "block-fines" && item.type !== "counter")
+      .reduce((sum, item) => sum + (item.points || 0), 0);
 
-  // Баллы за block-one-check
-  let blockScore = 0;
-  let blockMax = 0;
+    // Баллы за block-one-check
+    let blockScore = 0;
+    let blockMax = 0;
 
-  criteria
-    .filter(item => item.type === "block-one-check")
-    .forEach(block => {
-      const selectedOptionId = selectedBlockOptions[block.id];
-      const selectedOption = block["missions-block"]?.find(opt => opt.id === selectedOptionId);
-      
-      if (selectedOption) {
-        blockScore += selectedOption.points || 0;
-      }
-      
-      const maxPoints = Math.max(...(block["missions-block"]?.map(opt => opt.points) || [0]));
-      blockMax += maxPoints;
-    });
-
-  // Баллы за обычные блоки (чекбоксы)
-  let blockRegularScore = 0;
-  let blockRegularMax = 0;
-  
-  // Баллы за штрафные блоки
-  let penaltyScore = 0;
-
-  criteria
-    .filter(item => item.type === "block" || item.type === "block-fines")
-    .forEach(block => {
-      const blockData = penaltyBlockData[block.id];
-      const isFines = block.type === "block-fines";
-      
-      if (isFines) {
-        // ШТРАФЫ - отрицательные баллы
-        if (blockData) {
-          // Счетчики
-          Object.entries(blockData.counters || {}).forEach(([optionId, count]) => {
-            const option = block["missions-block"]?.find(opt => opt.id === parseInt(optionId));
-            if (option && count > 0) {
-              penaltyScore += (option.points || 0) * count;
-            }
-          });
-          
-          // Чекбоксы
-          Object.entries(blockData.checks || {}).forEach(([optionId, checked]) => {
-            if (checked) {
-              const option = block["missions-block"]?.find(opt => opt.id === parseInt(optionId));
-              if (option) {
-                penaltyScore += option.points || 0;
-              }
-            }
-          });
-        }
-      } else {
-        // ОБЫЧНЫЙ БЛОК - положительные баллы
-        if (blockData) {
-          // Чекбоксы
-          Object.entries(blockData.checks || {}).forEach(([optionId, checked]) => {
-            if (checked) {
-              const option = block["missions-block"]?.find(opt => opt.id === parseInt(optionId));
-              if (option) {
-                blockRegularScore += option.points || 0;
-              }
-            }
-          });
+    criteria
+      .filter(item => item.type === "block-one-check")
+      .forEach(block => {
+        const selectedOptionId = selectedBlockOptions[block.id];
+        const selectedOption = block["missions-block"]?.find(opt => opt.id === selectedOptionId);
+        
+        if (selectedOption) {
+          blockScore += selectedOption.points || 0;
         }
         
-        const maxPoints = block["missions-block"]?.reduce((sum, opt) => sum + (opt.points || 0), 0) || 0;
-        blockRegularMax += maxPoints;
+        const maxPoints = Math.max(...(block["missions-block"]?.map(opt => opt.points) || [0]));
+        blockMax += maxPoints;
+      });
+
+    // Баллы за обычные блоки (чекбоксы)
+    let blockRegularScore = 0;
+    let blockRegularMax = 0;
+    
+    // Баллы за штрафные блоки
+    let penaltyScore = 0;
+
+    criteria
+      .filter(item => item.type === "block" || item.type === "block-fines")
+      .forEach(block => {
+        const blockData = penaltyBlockData[block.id];
+        const isFines = block.type === "block-fines";
+        
+        if (isFines) {
+          // ШТРАФЫ - отрицательные баллы
+          if (blockData) {
+            // Счетчики
+            Object.entries(blockData.counters || {}).forEach(([optionId, count]) => {
+              const option = block["missions-block"]?.find(opt => opt.id === parseInt(optionId));
+              if (option && count > 0) {
+                penaltyScore += (option.points || 0) * count;
+              }
+            });
+            
+            // Чекбоксы
+            Object.entries(blockData.checks || {}).forEach(([optionId, checked]) => {
+              if (checked) {
+                const option = block["missions-block"]?.find(opt => opt.id === parseInt(optionId));
+                if (option) {
+                  penaltyScore += option.points || 0;
+                }
+              }
+            });
+          }
+        } else {
+          // ОБЫЧНЫЙ БЛОК - положительные баллы
+          if (blockData) {
+            // Чекбоксы
+            Object.entries(blockData.checks || {}).forEach(([optionId, checked]) => {
+              if (checked) {
+                const option = block["missions-block"]?.find(opt => opt.id === parseInt(optionId));
+                if (option) {
+                  blockRegularScore += option.points || 0;
+                }
+              }
+            });
+          }
+          
+          const maxPoints = block["missions-block"]?.reduce((sum, opt) => sum + (opt.points || 0), 0) || 0;
+          blockRegularMax += maxPoints;
+        }
+      });
+
+    // ✅ БАЛЛЫ ЗА СВЯЗАННЫЕ СЧЕТЧИКИ (для всех миссий)
+    let counterScore = 0;
+    let counterMax = 0;
+
+    // Определяем, есть ли связанные счетчики в текущей задаче
+    const hasLinkedCounters = checkForLinkedCounters();
+
+    if (hasLinkedCounters) {
+      // Получаем информацию о связанных счетчиках
+      const linkedCountersInfo = getLinkedCountersInfo();
+      
+      if (linkedCountersInfo) {
+        const { partialId, fullId, maxTotal, partialPoints, fullPoints } = linkedCountersInfo;
+        
+        // Текущие значения
+        const partialCount = singleCounterData[partialId] || 0;
+        const fullCount = singleCounterData[fullId] || 0;
+        
+        // Баллы за связанные счетчики
+        counterScore = (partialCount * partialPoints) + (fullCount * fullPoints);
+        
+        // Максимальный балл: все кубики полностью (самый выгодный вариант)
+        counterMax = maxTotal * fullPoints;
       }
-    });
+      
+      // Добавляем остальные счетчики (не связанные)
+      criteria
+        .filter(item => item.type === "counter" && !isPartOfLinkedCounters(item.id))
+        .forEach(item => {
+          const count = singleCounterData[item.id] || 0;
+          counterScore += (item.points || 0) * count;
+          const maxCount = item.max || 0;
+          counterMax += (item.points || 0) * maxCount;
+        });
+    } else {
+      // Обычные независимые счетчики
+      criteria
+        .filter(item => item.type === "counter")
+        .forEach(item => {
+          const count = singleCounterData[item.id] || 0;
+          counterScore += (item.points || 0) * count;
+          const maxCount = item.max || 0;
+          counterMax += (item.points || 0) * maxCount;
+        });
+    }
 
-  // ✅ ИСПРАВЛЕНО: Баллы за одиночные счетчики с учетом связанности
-  let counterScore = 0;
-  let counterMax = 0;
-  
-  // Проверяем, есть ли связанные счетчики (для задачи 3)
-  const hasLinkedCounters = task.id === 3 && 
-    criteria.some(c => c.id === 2) && 
-    criteria.some(c => c.id === 3);
-  
-  if (hasLinkedCounters) {
-    // Для связанных счетчиков максимальный балл считается по-другому
-    const partialCounter = criteria.find(c => c.id === 2);
-    const fullCounter = criteria.find(c => c.id === 3);
-    const maxTotal = partialCounter?.max || 5;
-    
-    // Текущие баллы
-    const partialCount = singleCounterData[2] || 0;
-    const fullCount = singleCounterData[3] || 0;
-    
-    counterScore = (partialCount * (partialCounter?.points || 3)) + 
-                   (fullCount * (fullCounter?.points || 6));
-    
-    // Максимальный балл: все кубики полностью (самый выгодный вариант)
-    counterMax = maxTotal * (fullCounter?.points || 6);
-    
-    // Добавляем остальные счетчики, если есть (например, штрафные)
-    criteria
-      .filter(item => item.type === "counter" && item.id !== 2 && item.id !== 3)
-      .forEach(item => {
-        const count = singleCounterData[item.id] || 0;
-        counterScore += (item.points || 0) * count;
-        const maxCount = item.max || 0;
-        counterMax += (item.points || 0) * maxCount;
-      });
-  } else {
-    // Обычные независимые счетчики
-    criteria
-      .filter(item => item.type === "counter")
-      .forEach(item => {
-        const count = singleCounterData[item.id] || 0;
-        counterScore += (item.points || 0) * count;
-        const maxCount = item.max || 0;
-        counterMax += (item.points || 0) * maxCount;
-      });
-  }
+    const currentTotal = regularScore + blockScore + blockRegularScore + penaltyScore + counterScore;
+    const maxTotal = regularMax + blockMax + blockRegularMax + counterMax;
 
-  const currentTotal = regularScore + blockScore + blockRegularScore + penaltyScore + counterScore;
-  const maxTotal = regularMax + blockMax + blockRegularMax + counterMax;
+    setTaskScore({ current: currentTotal, max: maxTotal });
+    
+    if (onScoreChange) {
+      onScoreChange(task.id, { current: currentTotal, max: maxTotal });
+    }
+  };
 
-  setTaskScore({ current: currentTotal, max: maxTotal });
-  
-  if (onScoreChange) {
-    onScoreChange(task.id, { current: currentTotal, max: maxTotal });
-  }
-};
+  // ✅ НОВАЯ ФУНКЦИЯ: Проверка наличия связанных счетчиков
+  const checkForLinkedCounters = () => {
+    // Миссия 1, Задача 3: связаны ID 2 и 3
+    if (missionId == 1 && task.id === 3) {
+      return criteria.some(c => c.id === 2) && criteria.some(c => c.id === 3);
+    }
+    // Миссия 2, Задача 1: связаны ID 3 и 4
+    if (missionId == 2 && task.id === 1) {
+      return criteria.some(c => c.id === 3) && criteria.some(c => c.id === 4);
+    }
+    return false;
+  };
+
+  // ✅ НОВАЯ ФУНКЦИЯ: Получение информации о связанных счетчиках
+  const getLinkedCountersInfo = () => {
+    // Миссия 1, Задача 3: частично (ID 2) и полностью (ID 3)
+    if (missionId == 1 && task.id === 3) {
+      const partialCounter = criteria.find(c => c.id === 2);
+      const fullCounter = criteria.find(c => c.id === 3);
+      if (partialCounter && fullCounter) {
+        return {
+          partialId: 2,
+          fullId: 3,
+          maxTotal: partialCounter.max || 5,
+          partialPoints: partialCounter.points || 3,
+          fullPoints: fullCounter.points || 6
+        };
+      }
+    }
+    // Миссия 2, Задача 1: частично (ID 3) и полностью (ID 4)
+    if (missionId == 2 && task.id === 1) {
+      const partialCounter = criteria.find(c => c.id === 3);
+      const fullCounter = criteria.find(c => c.id === 4);
+      if (partialCounter && fullCounter) {
+        return {
+          partialId: 3,
+          fullId: 4,
+          maxTotal: partialCounter.max || 5,
+          partialPoints: partialCounter.points || 3,
+          fullPoints: fullCounter.points || 6
+        };
+      }
+    }
+    return null;
+  };
+
+  // ✅ НОВАЯ ФУНКЦИЯ: Проверка, является ли ID частью связанных счетчиков
+  const isPartOfLinkedCounters = (id) => {
+    const linkedIds = [];
+    
+    if (missionId == 1 && task.id === 3) {
+      linkedIds.push(2, 3);
+    } else if (missionId == 2 && task.id === 1) {
+      linkedIds.push(3, 4);
+    }
+    
+    return linkedIds.includes(id);
+  };
 
   const toggleItem = (id) => {
     setCriteria(prev =>
@@ -315,14 +374,12 @@ export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, on
     }
   };
 
-  // ✅ НОВАЯ ФУНКЦИЯ: Обработка связанных счетчиков для кубиков
+  // ✅ ОБНОВЛЕННАЯ: Обработка связанных счетчиков для кубиков
   const handleLinkedCountersChange = (changedItemId, newValue) => {
-    // Находим оба связанных счетчика
-    const partialCounter = criteria.find(c => c.id === 2); // ID частично
-    const fullCounter = criteria.find(c => c.id === 3);   // ID полностью
-
-    if (!partialCounter || !fullCounter) {
-      // Если это не те счетчики, просто обновляем как обычно
+    const linkedInfo = getLinkedCountersInfo();
+    
+    if (!linkedInfo) {
+      // Если это не связанные счетчики, просто обновляем
       setSingleCounterData(prev => ({
         ...prev,
         [changedItemId]: newValue
@@ -330,9 +387,7 @@ export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, on
       return;
     }
 
-    const partialId = partialCounter.id;
-    const fullId = fullCounter.id;
-    const maxTotal = partialCounter.max || 5; // Всего кубиков
+    const { partialId, fullId, maxTotal } = linkedInfo;
 
     // Текущие значения
     let newPartial = singleCounterData[partialId] || 0;
@@ -357,8 +412,8 @@ export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, on
 
   // ✅ ОБНОВЛЕННАЯ: Обработка изменений счетчиков
   const handleSingleCounterDataChange = (itemId, value) => {
-    // Проверяем, являются ли это связанные счетчики для задачи 3
-    if (task.id === 3 && (itemId === 2 || itemId === 3)) {
+    // Проверяем, является ли этот счетчик частью связанных
+    if (isPartOfLinkedCounters(itemId)) {
       handleLinkedCountersChange(itemId, value);
     } else {
       // Обычное поведение для остальных счетчиков
@@ -369,7 +424,7 @@ export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, on
     }
   };
 
-  // Функция для рендеринга критерия в зависимости от типа
+  // ✅ ОБНОВЛЕННАЯ: Функция для рендеринга критерия в зависимости от типа
   const renderCriteriaItem = (item, index) => {
     if (item.type === "block-one-check") {
       return (
@@ -391,46 +446,50 @@ export default function MissionTaskBlock({ task, onScoreChange, onTimeChange, on
         />
       );
     } else if (item.type === "counter") {
-      // ✅ ОБНОВЛЕНО: Для связанных счетчиков передаем дополнительные пропсы
-      if (task.id === 3 && (item.id === 2 || item.id === 3)) {
-        const partialCounter = criteria.find(c => c.id === 2);
-        const fullCounter = criteria.find(c => c.id === 3);
-        const maxTotal = partialCounter?.max || 5;
+      // Проверяем, является ли счетчик частью связанных
+      if (isPartOfLinkedCounters(item.id)) {
+        const linkedInfo = getLinkedCountersInfo();
+        
+        if (linkedInfo) {
+          const { partialId, fullId, maxTotal } = linkedInfo;
+          
+          let currentVal = singleCounterData[item.id] || 0;
+          let dynamicMax = maxTotal;
 
-        let currentVal = singleCounterData[item.id] || 0;
-        let dynamicMax = maxTotal;
+          if (item.id === partialId) {
+            // Частично - максимум = всего - полностью
+            const fullVal = singleCounterData[fullId] || 0;
+            dynamicMax = maxTotal - fullVal;
+          } else if (item.id === fullId) {
+            // Полностью - максимум = всего - частично
+            const partialVal = singleCounterData[partialId] || 0;
+            dynamicMax = maxTotal - partialVal;
+          }
 
-        if (item.id === 2) { // Частично
-          const fullVal = singleCounterData[3] || 0;
-          dynamicMax = maxTotal - fullVal;
-        } else if (item.id === 3) { // Полностью
-          const partialVal = singleCounterData[2] || 0;
-          dynamicMax = maxTotal - partialVal;
+          return (
+            <MissionSingleCounter
+              key={item.id}
+              index={index + 1}
+              item={item}
+              onCounterChange={handleSingleCounterDataChange}
+              currentValue={currentVal}
+              max={dynamicMax}
+            />
+          );
         }
-
-        return (
-          <MissionSingleCounter
-            key={item.id}
-            index={index + 1}
-            item={item}
-            onCounterChange={handleSingleCounterDataChange}
-            currentValue={currentVal}
-            max={dynamicMax}
-          />
-        );
-      } else {
-        // Обычный счетчик
-        return (
-          <MissionSingleCounter
-            key={item.id}
-            index={index + 1}
-            item={item}
-            onCounterChange={handleSingleCounterDataChange}
-            currentValue={singleCounterData[item.id] || 0}
-            max={item.max}
-          />
-        );
       }
+      
+      // Обычный счетчик
+      return (
+        <MissionSingleCounter
+          key={item.id}
+          index={index + 1}
+          item={item}
+          onCounterChange={handleSingleCounterDataChange}
+          currentValue={singleCounterData[item.id] || 0}
+          max={item.max}
+        />
+      );
     } else if (item.type === "time") {
       return (
         <MissionTimeItem
