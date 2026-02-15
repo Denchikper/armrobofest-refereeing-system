@@ -2,7 +2,7 @@ const jwtSpreadsheet = require("./authSpreadsheet")
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const addResultToSpreadsheet = async (partId, name_team, number_in_team, table_id, result) => {
-    
+    console.log(result[2].result)
     let totalScoreAllTasks = 0;
     let totalTimeAllTasks = 0;
     let tasksProcessed = 0;
@@ -59,6 +59,12 @@ const addResultToSpreadsheet = async (partId, name_team, number_in_team, table_i
                     }
                     // Для задачи "Бегемот в вальере" с selected
                     else if (item.name === "Бегемот в вальере" && item.selected !== undefined && item.selected !== null) {
+                        rowData[item.name] = item.selected;
+                        // ✅ Добавляем к сумме задачи
+                        taskTotal += item.points || 0;
+                    }
+                    else if (item.name === "Сундуки" && item.selected !== undefined && item.selected !== null) {
+                        console.log(item.selected)
                         rowData[item.name] = item.selected;
                         // ✅ Добавляем к сумме задачи
                         taskTotal += item.points || 0;

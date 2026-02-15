@@ -15,7 +15,7 @@ export default function MissionBlockItem({ index, block, onBlockDataChange }) {
       checked: isFines ? "bg-red-500 border-red-500" : "bg-[#3AC318] border-[#3AC318]",
       unchecked: isFines ? "border-gray-300 hover:border-red-400" : "border-gray-300 hover:border-[#3AC318]"
     },
-    points: isFines ? "text-red-500" : "text-gray-500",
+    points: isFines ? "text-red-500" : "text-[#3AC318]",
     button: {
       enabled: isFines 
         ? "border-red-400 text-red-600 hover:bg-red-50" 

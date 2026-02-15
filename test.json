@@ -26,11 +26,35 @@
             { "id": 2, "text": "1 поворот", "points": 2.5},
             { "id": 3, "text": "2 поворот", "points": 2.5},
             { "id": 4, "text": "Проехал весь маршрут", "points": 10},
+            { "id": 5, "type": "block", "name": "Кубики", "missions-block": [
+                { "id": 1, "text": "Сообщил количество кубиков", "type": "checkbox", "points": 10},
+                { "id": 2, "text": "Сообщил верное количество кубиков", "type": "checkbox", "points": 20}
+            ]},
             { "id": 5, "type": "block-one-check", "name": "Финиш", "missions-block": [
                 { "id": 1, "text": "Не полная проекция", "points": 10 },
                 { "id": 2, "text": "Полная проекция", "points": 20 }
             ]},
             {"id": 6, "type": "time"}
+        ]
+    },
+    {
+        "id": 3,
+        "n_header": 2,
+        "criteria": [
+            { "id": 1, "text": "Выход со старта", "points": 15},
+            { "id": 2, "type": "block", "name": "Перекрёстки", "missions-block": [
+                { "id": 1, "text": "1-й перекрёсток", "type": "checkbox", "points": 5},
+                { "id": 2, "text": "2-й перекрёсток", "type": "checkbox", "points": 5},
+                { "id": 3, "text": "3-й перекрёсток", "type": "checkbox", "points": 5}
+            ]},
+            { "id": 3, "text": "Проехал через горку", "points": 15},
+            { "id": 4, "type": "block-one-check", "name": "Сундуки", "missions-block": [
+                { "id": 1, "text": "1-й сундук ( 5 б.)", "points": 5 },
+                { "id": 2, "text": "2-й сундук ( 10 б.)", "points": 10 },
+                { "id": 3, "text": "3-й сундук ( 15 б.)", "points": 15 }
+            ]},
+            { "id": 5, "text": "Финиш (остановка)", "points": 15},
+            { "id": 6, "type": "time"}
         ]
     }
   ]
